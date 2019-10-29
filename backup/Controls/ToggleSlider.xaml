@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="Samsung.SmartSearchApp.View.Controls.ToggleSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ap="clr-namespace:Samsung.AppCommon.MVVM.AttachedProperties;assembly=MVVM"
+             xmlns:viewConverter="clr-namespace:Samsung.SmartSearchApp.View.Converters"
+             mc:Ignorable="d" x:Name="part_toggleSlider_ctrl"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <viewConverter:DoubleToBooleanConverter x:Key="DoubleToBooleanConverter"/>
+
+        <SolidColorBrush x:Key="OnToggleNormalBgBrush" Color="#0990ad"/>
+        <SolidColorBrush x:Key="OnToggleOverBgBrush" Color="#0cb2d6"/>
+        <SolidColorBrush x:Key="OnToggleDimBgBrush" Color="#d4d4d4"/>
+        <SolidColorBrush x:Key="OnToggleNormalCircleBrush" Color="#ffffff"/>
+        
+        <SolidColorBrush x:Key="TogglePressBgBrush" Color="#666666"/>
+        <SolidColorBrush x:Key="ToggleDimBgBrush" Color="#d4d4d4"/>
+
+        <SolidColorBrush x:Key="OffToggleBgBrush" Color="#ffffff"/>
+        <SolidColorBrush x:Key="OffToggleOverCircleBrush" Color="#252525"/>
+        <SolidColorBrush x:Key="OffToggleNormalCircleBrush" Color="#787878"/>
+
+        <Style x:Key="RepeatButtonTransparent2" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ToggleSliderStyle" TargetType="{x:Type Slider}">
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+            <Setter Property="Background" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource OffToggleNormalCircleBrush}"/>
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
+            <Setter Property="SmallChange" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Slider}">
+                        <Grid>
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="10" BorderThickness="{TemplateBinding BorderThickness}" 
+                                        Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Padding="4, 0">
+                                <Grid>
+                                    <Border x:Name="TrackBackground" VerticalAlignment="Stretch" />
+                                    <Track x:Name="PART_Track">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent2}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent2}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb x:Name="Thumb" Focusable="False" OverridesDefaultStyle="True" VerticalAlignment="Center">
+                                                <Thumb.Template>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Grid HorizontalAlignment="Stretch" UseLayoutRounding="True" VerticalAlignment="Stretch">
+                                                            <Ellipse x:Name="grip" Fill="{TemplateBinding Background}" Stretch="Fill" Width="10" Height="10"/>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Thumb.Template>
+                                            </Thumb>
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.3"/>
+                            </Trigger>
+                            <Trigger Property="ap:SliderProperties.IsChecked" Value="true">
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource OnToggleNormalBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+                            </Trigger>
+                            <Trigger Property="ap:SliderProperties.IsChecked" Value="false">
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OffToggleNormalCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource OffToggleBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                            </Trigger>
+                            <!-- MouseOver -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="true"/>
+                                    <Condition Property="IsMouseOver" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource OnToggleOverBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="false"/>
+                                    <Condition Property="IsMouseOver" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OffToggleOverCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource OffToggleBgBrush}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource OffToggleOverCircleBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                            </MultiTrigger>
+                            <!-- Pressed & Thumb dragging -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="true"/>
+                                    <Condition Property="ap:SliderProperties.IsValueChanging" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Thumb" Property="Background" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource TogglePressBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="false"/>
+                                    <Condition Property="ap:SliderProperties.IsValueChanging" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource TogglePressBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+                            </MultiTrigger>
+                            <!-- Disabled -->
+                            <!--<MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled" Value="false"/>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="true"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource OnToggleNormalCircleBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource ToggleDimBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="0"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsEnabled" Value="false"/>
+                                    <Condition Property="ap:SliderProperties.IsChecked" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Thumb" Value="{StaticResource ToggleDimBgBrush}"/>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource OffToggleBgBrush}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource ToggleDimBgBrush}"/>
+                                <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                            </MultiTrigger>-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding ElementName=part_toggleSlider_ctrl, Path=DataContext}">
+        <Slider x:Name="part_toggle_slider" IsSelectionRangeEnabled="True" Minimum="0" Maximum="1" Ticks="1" 
+                ap:SliderProperties.IsValueChanging="{Binding ElementName=part_toggle_slider, Path=Value, Converter={StaticResource DoubleToBooleanConverter}}"
+                ap:SliderProperties.IsChecked="{Binding ElementName=part_toggleSlider_ctrl, Path=IsToggleOn, Mode=TwoWay}" 
+                Value="{Binding ElementName=part_toggleSlider_ctrl, Path=ThumbValue, Mode=TwoWay}" 
+                Style="{DynamicResource ToggleSliderStyle}"
+                
+                Thumb.DragDelta="Part_toggle_slider_DragDelta"
+                
+                PreviewMouseLeftButtonDown="part_toggle_slider_PreviewMouseLeftButtonDownUp"
+                PreviewMouseUp="part_toggle_slider_PreviewMouseLeftButtonDownUp"
+                
+                PreviewTouchDown="part_toggle_slider_PreviewTouchDownMove"
+                PreviewTouchUp="part_toggle_slider_PreviewTouchUp"
+                
+                PreviewStylusDown="part_toggle_slider_PreviewStylusDown"
+                PreviewStylusUp="part_toggle_slider_PreviewStylusUp"
+               
+                PreviewKeyUp="part_toggle_slider_PreviewKeyUp"/>
+
+        <!-- PreviewMouseMove="part_toggle_slider_PreviewMouseMove"
+             PreviewTouchMove="part_toggle_slider_PreviewTouchDownMove"
+             PreviewStylusMove="part_toggle_slider_PreviewStylusMove" -->
+    </Grid>
+</UserControl>

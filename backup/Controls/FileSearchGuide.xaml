@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="Samsung.SmartSearchApp.View.Controls.TutorialPages.FileSearchGuide"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:Samsung.SmartSearchApp.SmartSearchCommon.LangResources;assembly=QuickSearchCommon"
+             xmlns:local="clr-namespace:Samsung.SmartSearchApp.View.Controls.TutorialPages"
+             xmlns:viewCtrl="clr-namespace:Samsung.SmartSearchApp.View.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/ResourceDictionaries/TutorialDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="part_rootGrid" IsVisibleChanged="Part_rootGrid_IsVisibleChanged" IsHitTestVisible="False">
+        <Border BorderThickness="1" BorderBrush="{StaticResource CommonDeviderColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{StaticResource TutorialWidth}" Height="{StaticResource TutorialHeight}">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{StaticResource SearchBarAreaGridLength}"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Border Background="{StaticResource CommonFocusedColor}">
+                    <Grid Background="White" Height="30" Margin="20, 0" >
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource SearchBoxBorderStyle}">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{x:Static res:Resource.PC_QUICH_FILE_NAME_SEARCH}"
+                                           Margin="10, 0" FontSize="13"/>
+                            </Border>
+                            <TextBlock x:Name="part_typed_tbl" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="14"/>
+                            <Rectangle x:Name="part_cursor_rect" Width="1" Height="20" VerticalAlignment="Center" Fill="Black" Margin="2, 0, 0, 0" 
+                                       SnapsToDevicePixels="True" UseLayoutRounding="True"/>
+                        </StackPanel>
+
+                        <Border x:Name="part_search_btn" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                Width="50" Height="30">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" FontSize="18"
+                                       Foreground="#e4e4e4" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource TutorailOptionWidth}"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="{StaticResource TutorailPreviewWidth}"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid VerticalAlignment="Stretch">
+                        <ListView Style="{StaticResource FullOptionListViewStyle}"/>
+                        <Rectangle Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{StaticResource CommonDeviderColor}" 
+                                   SnapsToDevicePixels="True" UseLayoutRounding="True"/>
+                    </Grid>
+
+                    <TextBlock x:Name="part_guide_tbl" Grid.Column="1" Text="{x:Static res:Resource.PC_QUICH_FILE_SEARCH_PLACEHOLDER}" Foreground="#adadad"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+
+                    <ListView x:Name="part_res_listView" Grid.Column="1" BorderThickness="0" Padding="0" Margin="0"
+                              ItemContainerStyle="{StaticResource TutorialDetailListViewItemStyle}"
+                              Background="Transparent"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListViewItem x:Name="part_lvi_1" Tag="pptx">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="products-Samsung.pptx"/>
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_2" Tag="docx">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Samson.doc"/>
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_3" Tag="pdf">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Samsung design (2).pdf"/>
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_4" Tag="xlsx">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Nov. 1st-Samsung anniv.xlsx"/>
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_5" Tag="txt">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Samsung-QS.txt"  />
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_6" Tag="png">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Samsam ribbon - menu.png"/>
+                        </ListViewItem>
+                        <ListViewItem x:Name="part_lvi_7" Tag="jpg">
+                            <viewCtrl:HighlightTextBlock Style="{StaticResource ResultItemHighlightTextBlockStyle}" 
+                                                         FullText="Taken picture Sams - 20.jpg"/>
+                        </ListViewItem>
+                    </ListView>
+
+                    <Rectangle Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="1" Fill="{StaticResource CommonDeviderColor}" 
+                               SnapsToDevicePixels="True" UseLayoutRounding="True"/>
+                    <Border Grid.Column="2" Padding="10, 5" BorderThickness="0">
+                        <TextBlock Text="{x:Static res:Resource.PC_QUICH_SEL_FILE_TO_PREVIEW}" VerticalAlignment="Center" TextAlignment="Center"
+                                   Foreground="{StaticResource GuideTextColor}" FontSize="11" TextWrapping="Wrap"/>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
